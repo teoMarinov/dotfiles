@@ -1,0 +1,14 @@
+@theme "./config.rasi"
+
+window {
+  width: inherit;
+  height: inherit;
+}
+
+entry {
+  width: inherit;
+}
+
+  listview {
+  lines: 20;
+}

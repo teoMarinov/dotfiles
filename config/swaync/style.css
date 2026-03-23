@@ -1,0 +1,206 @@
+@define-color base   #1e1e2e;
+@define-color mantle #181825;
+@define-color crust  #0f0f0f;
+
+@define-color text     #cdd6f4;
+@define-color subtext0 #a6adc8;
+@define-color subtext1 #bac2de;
+
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color surface2 #585b70;
+
+@define-color overlay0 #6c7086;
+@define-color overlay1 #7f849c;
+@define-color overlay2 #9399b2;
+
+@define-color blue      #89b4fa;
+@define-color lavender  #b4befe;
+@define-color sapphire  #74c7ec;
+@define-color sky       #89dceb;
+@define-color teal      #94e2d5;
+@define-color green     #a6e3a1;
+@define-color yellow    #f9e2af;
+@define-color peach     #fab387;
+@define-color maroon    #eba0ac;
+@define-color red       #f38ba8;
+@define-color mauve     #cba6f7;
+@define-color pink      #f5c2e7;
+@define-color flamingo  #f2cdcd;
+@define-color rosewater #f5e0dc;
+* {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  border: none;
+  border-radius: 0;
+  transition: all 0.15s ease;
+}
+
+/* ── Notification panel ───────────────────────────────────── */
+
+.control-center {
+  background: @crust;
+  border: 1px solid @blue;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 8px;
+  color: @text;
+  box-shadow: none;
+}
+
+/* ── Individual notification ──────────────────────────────── */
+
+.notification-row {
+  outline: none;
+  margin: 4px 0;
+}
+
+.notification {
+  background: @mantle;
+  border: 1px solid @blue;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+  color: @blue;
+}
+
+.notification:hover {
+  background: @base;
+  border-radius: 8px;
+}
+
+.notification.critical {
+  border-color: @red;
+  background: @red;
+}
+
+/* ── Notification content ─────────────────────────────────── */
+
+.notification-content {
+  padding: 0;
+}
+
+.summary {
+  font-size: 13px;
+  font-weight: 500;
+  color: @text;
+  padding-bottom: 2px;
+}
+
+.body {
+  font-size: 12px;
+  color: @subtext0;
+  padding-top: 2px;
+}
+
+.time {
+  font-size: 11px;
+  color: @subtext0;
+  margin-top: 4px;
+}
+
+.app-name {
+  font-size: 11px;
+  color: @sapphire;
+  margin-bottom: 4px;
+}
+
+/* ── Close button ─────────────────────────────────────────── */
+
+.close-button {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: @surface1;
+  padding: 2px 6px;
+  font-size: 12px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.close-button:hover {
+  background: rgba(220, 80, 70, 0.15);
+  border-color: rgba(220, 80, 70, 0.3);
+  color: #e07070;
+}
+
+/* ── Action buttons ───────────────────────────────────────── */
+
+.notification-action {
+  background: transparent;
+  border: 1px solid rgba(100, 140, 200, 0.18);
+  border-radius: 6px;
+  color: rgba(180, 195, 225, 0.75);
+  padding: 4px 12px;
+  margin: 6px 4px 0;
+  font-size: 12px;
+}
+
+.notification-action:hover {
+  background: rgba(88, 140, 255, 0.18);
+  border-color: rgba(88, 140, 255, 0.45);
+  color: #5b9cf6;
+}
+
+/* ── Control center header ────────────────────────────────── */
+
+.top-action-buttons {
+  margin-bottom: 8px;
+}
+
+.control-center-clear-all {
+  background: transparent;
+  border: 1px solid rgba(100, 140, 200, 0.18);
+  border-radius: 6px;
+  color: rgba(160, 175, 210, 0.55);
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.control-center-clear-all:hover {
+  background: rgba(220, 80, 70, 0.12);
+  border-color: rgba(220, 80, 70, 0.3);
+  color: #e07070;
+}
+
+/* ── Do not disturb toggle ────────────────────────────────── */
+
+.toggle-button {
+  background: transparent;
+  border: 1px solid rgba(100, 140, 200, 0.18);
+  border-radius: 6px;
+  color: rgba(160, 175, 210, 0.55);
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.toggle-button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(210, 220, 240, 0.9);
+}
+
+.toggle-button.active {
+  background: rgba(88, 140, 255, 0.18);
+  border-color: rgba(88, 140, 255, 0.45);
+  color: #5b9cf6;
+}
+
+/* ── Empty state ──────────────────────────────────────────── */
+
+.empty-state {
+  color: rgba(160, 175, 210, 0.3);
+  font-size: 13px;
+  padding: 20px;
+}
+
+.notification-content *:hover,
+.notification-content *:selected,
+.summary:hover,
+.body:hover {
+  background: transparent;
+  border-radius: 8px;
+}
+
+label:hover {
+  background: none;
+}

@@ -1,0 +1,14 @@
+@theme "~/.config/rofi/config.rasi"
+
+window {
+  width: 15%;
+}
+
+entry {
+  placeholder: "Lock";
+}
+
+listview {
+  // layout: horizontal;
+  lines: 5;
+}

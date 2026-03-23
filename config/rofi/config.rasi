@@ -1,0 +1,97 @@
+@theme "./color-theme.rasi"
+
+/*****----- Configuration -----*****/
+configuration {
+    show-icons:                 true;
+    drun-display-format:        "{name}";
+    hover-select:               true;
+    me-select-entry:            "MouseSecondary";
+    me-accept-entry:            "MousePrimary";
+}
+
+// /*****----- Main Window -----*****/
+window {
+    /* properties for window widget */
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       30%;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    /* properties for all widgets */
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    cursor:                      "default";
+}
+//
+// /*****----- Main Box -----*****/
+mainbox {
+    enabled:                     true;
+    margin:                      10px;
+}
+//
+// /*****----- Inputbar -----*****/
+inputbar {
+    enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
+    padding:                     0px 10px 10px 0px;
+    border:                      0px 0px 2px 0px;
+    border-radius:               0px;
+    border-color:                gray/20%;
+    background-color:            transparent;
+    children:                    [ "entry" ];
+}
+//
+entry {
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  white;
+    cursor:                      text;
+    placeholder:                 "Type to search";
+    placeholder-color:           lightgrey;
+}
+//
+// /*****----- Listview -----*****/
+listview {
+    enabled:                     true;
+    columns:                     1;
+    lines:                       10;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    reverse:                     false;
+
+    spacing:                     5px;
+    border:                      0px solid;
+    background-color:            transparent;
+}
+
+
+// /*****----- Elements -----*****/
+element {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     5 10px;
+    border-color:                gray/30%;
+}
+
+element normal.active {
+    background-color:            #67FF80;
+    text-color:                  black;
+}
+
+element-text selected,
+element selected.normal {
+    background-color:            #FDD66F;
+    text-color:                  black;
+}
+
+element selected.active {
+    background-color:            #FDD66F;
+    text-color:                  black;
+}
