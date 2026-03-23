@@ -1,0 +1,3 @@
+sudo mkinitcpio -P
+sudo systemctl disable sddm
+sudo systemctl restart keyd
