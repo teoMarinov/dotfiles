@@ -1,0 +1,39 @@
+Installed arch
+Used nmtui to connect to the wifi
+Installed git nvim
+Installed nvim and dotfiles repo
+Installed yay (sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si)
+Copy the config files from the the dotfiles repo to my .config
+Copy the home files from the dofgiles repo to my ~ dir
+Installed zsh
+Installed unzip
+Installed fzf
+Yay installed oh-my-posh
+Installed eza bc blueman brightnessctl btop cliphist grim hyprlock jq less loupe keyd noto-fonts-emoji noto-fonts-cjk slurp swaync ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols waybar
+Used `chsh -s /usr/bin/zsh teo` to change my shell to zsh
+Update keyd file
+Ran disable sddm and restart keyd
+sudo systemctl disable sddm
+sudo systemctl enable keyd
+sudo systemctl restart keyd
+brightnessctl --list to see name of the monitor "amdgpu_bl1" and update the CTL.conf in hyprland
+Install dark theme yay 0S flat-remix flat-remix-gtk
+Install xdg portal sudo pacman -S xdg-desktop-portal-gtk
+Set loupe as default image viewer
+xdg-mime default org.gnome.Loupe.desktop image/jpeg
+xdg-mime default org.gnome.Loupe.desktop image/png
+xdg-mime default org.gnome.Loupe.desktop image/webp
+xdg-mime default org.gnome.Loupe.desktop image/gif
+xdg-mime default org.gnome.Loupe.desktop image/tiff
+Update the /etc/mkinitcpio.d MODULES to enable early driver loading
+Update /etc/default/grub with: GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nowatchdog nvidia-drm.modeset=1 nvidia-drm.fbdev=1 nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+This disabled watchdog and makes sure nvidia drivers load correctly
+Update modprobe.d with the files from the dots
+Run commands to apply the chages:
+sudo mkinitcpio -P
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sync && reboot
+Run the following commands to see if I have correct path mappins in the hypr envs for AQ_DRM_DEVICES
+ls -l /dev/dri/by-path/
+lspci | grep -i vga
+The dirs were back to 0 and 1, but after running the /etc/ changes and adding nvidia settings they changed again to 1 and 2, no edits to hypr.conf needed

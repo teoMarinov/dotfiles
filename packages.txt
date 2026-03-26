@@ -27,7 +27,6 @@ nodejs
 noto-fonts-emoji 
 noto-fonts-cjk 
 npm
-oh-my-posh
 pavucontrol
 pipewire
 rofi
@@ -50,4 +49,4 @@ zsh
 # yay
 flat-remix
 adw-gtk3
-
+oh-my-posh
