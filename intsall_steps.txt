@@ -37,3 +37,5 @@ Run the following commands to see if I have correct path mappins in the hypr env
 ls -l /dev/dri/by-path/
 lspci | grep -i vga
 The dirs were back to 0 and 1, but after running the /etc/ changes and adding nvidia settings they changed again to 1 and 2, no edits to hypr.conf needed
+Use brightnessctl to check the name of the laptop monitor (can change between amdgpu_bl1 and bl2)
+Update hyprland conf if needed for the brightness commands
