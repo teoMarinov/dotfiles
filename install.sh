@@ -1,45 +1,25 @@
 #!/bin/bash
 
-ECHO "Starting installation script"
-
+# Stop on any error
 set -e
 
 # ── Colors ─────────────────────────────────────────────────────────────────────
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
 NC='\033[0m'
 
 log() { echo -e "${BLUE}→${NC} $1"; }
 ok()  { echo -e "${GREEN}✔${NC} $1"; }
+warn() { echo -e "${YELLOW}⚠${NC} $1"; }
 
 # ── Packages ───────────────────────────────────────────────────────────────────
+# Added 'base-devel' here as it is required for building AUR packages
 PACMAN_PACKAGES=(
-    git
-    neovim
-    zsh
-    unzip
-    fzf
-    eza
-    bc
-    blueman
-    brightnessctl
-    btop
-    cliphist
-    grim
-    hyprlock
-    jq
-    less
-    loupe
-    keyd
-    noto-fonts-emoji
-    noto-fonts-cjk
-    slurp
-    swaync
-    ttf-jetbrains-mono-nerd
-    ttf-nerd-fonts-symbols
-    waybar
-    xdg-desktop-portal-gtk
-    pavucontrol
+    base-devel git neovim zsh unzip fzf eza bc blueman brightnessctl btop 
+    cliphist grim hyprlock jq less loupe keyd noto-fonts-emoji noto-fonts-cjk 
+    slurp swaync ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols waybar 
+    xdg-desktop-portal-gtk pavucontrol xdg-utils
 )
 
 AUR_PACKAGES=(
@@ -64,144 +44,100 @@ install_yay() {
     ok "yay installed"
 }
 
-# ── Install pacman packages ────────────────────────────────────────────────────
-install_pacman() {
+# ── Install Packages ───────────────────────────────────────────────────────────
+install_packages() {
     log "Installing pacman packages..."
     sudo pacman -S --needed --noconfirm "${PACMAN_PACKAGES[@]}"
-    ok "Pacman packages installed"
-}
-
-# ── Install AUR packages ───────────────────────────────────────────────────────
-install_aur() {
+    
     log "Installing AUR packages..."
     yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
-    ok "AUR packages installed"
 }
 
-# ── Main ───────────────────────────────────────────────────────────────────────
-echo ""
+# ── Main Script Execution ──────────────────────────────────────────────────────
 echo "╔══════════════════════════════════════╗"
-echo "║        01 - Package Installation     ║"
+echo "║      Arch System Setup Script        ║"
 echo "╚══════════════════════════════════════╝"
-echo ""
 
 install_yay
-install_pacman
-install_aur
-
-echo ""
-ok "All packages installed"
-
-echo "Starting applying configs"
+install_packages
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ETC_SRC="$SCRIPT_DIR/etc"
+
+# ── Config files (.config) ─────────────────────────────────────────────────────
+log "Applying dotfiles..."
+mkdir -p "$HOME/.config"
 
 CONFIG_DIRS=(hypr kitty ohmyposh rofi swaync waybar)
-HOME_FILES=(.zshrc .zprofile)
-
-# ── Config files ───────────────────────────────────────────────────────────────
-log "Copying config files to ~/.config/..."
 for dir in "${CONFIG_DIRS[@]}"; do
-    src="$SCRIPT_DIR/config/$dir"
-    dest="$HOME/.config/$dir"
-
-    if [ ! -d "$src" ]; then
-        echo "  ⚠ Skipping $dir — not found in ./config/"
-        continue
+    if [ -d "$SCRIPT_DIR/config/$dir" ]; then
+        rm -rf "$HOME/.config/$dir"
+        cp -r "$SCRIPT_DIR/config/$dir" "$HOME/.config/"
+        ok "Configured: $dir"
+    else
+        warn "Missing config directory: $dir"
     fi
-
-    rm -rf "$dest"
-    cp -r "$src" "$dest"
-    ok "$dir → ~/.config/$dir"
 done
 
-# ── Home files ─────────────────────────────────────────────────────────────────
-log "Copying home files to ~/..."
+# ── Home files (.zshrc, etc) ───────────────────────────────────────────────────
+HOME_FILES=(.zshrc .zprofile)
 for file in "${HOME_FILES[@]}"; do
-    src="$SCRIPT_DIR/home/$file"
-
-    if [ ! -f "$src" ]; then
-        echo "  ⚠ Skipping $file — not found in ./home/"
-        continue
+    if [ -f "$SCRIPT_DIR/home/$file" ]; then
+        cp "$SCRIPT_DIR/home/$file" "$HOME/$file"
+        ok "Configured: $file"
     fi
-
-    cp "$src" "$HOME/$file"
-    ok "$file → ~/$file"
 done
 
-echo ""
-ok "Dotfiles copied"
+# ── System Level Changes (/etc) ───────────────────────────────────────────────
+log "Applying system changes (/etc)..."
 
-echo "setting up system changes"
-ETC="$SCRIPT_DIR/etc"
- 
-# ── GRUB — update only GRUB_CMDLINE_LINUX_DEFAULT ─────────────────────────────
-log "Updating GRUB_CMDLINE_LINUX_DEFAULT..."
-NEW_LINE=$(grep '^GRUB_CMDLINE_LINUX_DEFAULT=' "$ETC/default/grub")
-sudo sed -i "s|^GRUB_CMDLINE_LINUX_DEFAULT=.*|$NEW_LINE|" /etc/default/grub
-ok "GRUB cmdline updated"
- 
-# ── mkinitcpio — update only MODULES line ─────────────────────────────────────
-log "Updating mkinitcpio MODULES..."
-NEW_MODULES=$(grep '^MODULES=' "$ETC/mkinitcpio.conf")
-sudo sed -i "s|^MODULES=.*|$NEW_MODULES|" /etc/mkinitcpio.conf
-ok "mkinitcpio MODULES updated"
- 
-# ── keyd — full copy ───────────────────────────────────────────────────────────
-log "Copying keyd config..."
-sudo cp -r "$ETC/keyd/." /etc/keyd/
-ok "keyd config copied"
- 
-# ── modprobe.d — full copy ─────────────────────────────────────────────────────
-log "Copying modprobe.d config..."
-sudo cp -r "$ETC/modprobe.d/." /etc/modprobe.d/
-ok "modprobe.d config copied"
- 
-# ── Apply changes ──────────────────────────────────────────────────────────────
-log "Rebuilding initramfs..."
+# GRUB Update
+if [ -f "$ETC_SRC/default/grub" ]; then
+    NEW_GRUB_CMD=$(grep '^GRUB_CMDLINE_LINUX_DEFAULT=' "$ETC_SRC/default/grub")
+    sudo sed -i "s|^GRUB_CMDLINE_LINUX_DEFAULT=.*|$NEW_GRUB_CMD|" /etc/default/grub
+    ok "GRUB command line updated"
+fi
+
+# mkinitcpio Update
+if [ -f "$ETC_SRC/mkinitcpio.conf" ]; then
+    NEW_MODULES=$(grep '^MODULES=' "$ETC_SRC/mkinitcpio.conf")
+    sudo sed -i "s|^MODULES=.*|$NEW_MODULES|" /etc/mkinitcpio.conf
+    ok "mkinitcpio MODULES updated"
+fi
+
+# keyd & modprobe.d (Full Directory Sync)
+sudo cp -r "$ETC_SRC/keyd/"* /etc/keyd/ 2>/dev/null || warn "keyd src empty"
+sudo cp -r "$ETC_SRC/modprobe.d/"* /etc/modprobe.d/ 2>/dev/null || warn "modprobe src empty"
+
+# ── Services & Shell ──────────────────────────────────────────────────────────
+log "Managing services..."
+sudo systemctl disable sddm || true
+sudo systemctl enable --now keyd
+
+log "Setting default shell to zsh..."
+ZSH_PATH=$(which zsh)
+if [ "$SHELL" != "$ZSH_PATH" ]; then
+    sudo chsh -s "$ZSH_PATH" "$USER"
+    ok "Shell changed to zsh"
+fi
+
+log "Setting Loupe as default viewer..."
+# Ensure loupe desktop file exists before setting
+if [ -f /usr/share/applications/org.gnome.Loupe.desktop ]; then
+    for mime in image/jpeg image/png image/webp image/gif image/tiff image/bmp image/svg+xml; do
+        xdg-mime default org.gnome.Loupe.desktop $mime
+    done
+    ok "Loupe defaults set"
+fi
+
+# ── Finalize ──────────────────────────────────────────────────────────────────
+log "Regenerating system images..."
 sudo mkinitcpio -P
- 
-log "Rebuilding GRUB config..."
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-# ── Disable SDDM ───────────────────────────────────────────────────────────────
-log "Disabling SDDM..."
-if systemctl is-enabled sddm &>/dev/null; then
-    sudo systemctl disable sddm
-    ok "SDDM disabled"
-else
-    ok "SDDM already disabled, skipping"
-fi
- 
-# ── Enable keyd ────────────────────────────────────────────────────────────────
-log "Enabling and restarting keyd..."
-sudo systemctl enable keyd
-sudo systemctl restart keyd
-ok "keyd enabled and running"
-
-# ── Change shell to zsh ────────────────────────────────────────────────────────
-log "Setting zsh as default shell..."
-if [ "$SHELL" != "/usr/bin/zsh" ]; then
-    chsh -s /usr/bin/zsh "$USER"
-    ok "Shell changed to zsh"
-else
-    ok "zsh already default shell, skipping"
-fi
- 
-# ── Set Loupe as default image viewer ─────────────────────────────────────────
-log "Setting Loupe as default image viewer..."
-for mime in image/jpeg image/png image/webp image/gif image/tiff image/bmp image/svg+xml; do
-    xdg-mime default org.gnome.Loupe.desktop $mime
-done
-ok "Loupe set as default image viewer"
- 
-echo ""
-ok "System config applied"
-
+echo -e "\n${GREEN}Setup Complete!${NC}"
 read -p "Reboot now? [Y/n] " answer
 answer=${answer:-y}
 if [[ "$answer" =~ ^[Yy]$ ]]; then
     sync && reboot
-else
-    echo "Skipping reboot. Remember to reboot before running 04-services.sh"
 fi
