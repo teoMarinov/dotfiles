@@ -1,9 +1,13 @@
 # Archinstall
 
-Before installing run `rfkill unblock wifi` to see if there's a softblock on the wifi and run `rfkill unblock wifi`
+Before installing run `rfkill` to see if there's a softblock on the wifi and run `rfkill unblock wifi`
+If you need to format your disk run `lsblk` to see all partitions then `gdisk /dev/[name_of_disk]` press `x` then `z` then `y` `y` and you are done.
+Run `pacman -Syu`
+
+To connect to the internet:
 
 ```
- iwctl
+iwctl
 
 [iwd] device list
 [iwd] wlan0 set-property Powered on
