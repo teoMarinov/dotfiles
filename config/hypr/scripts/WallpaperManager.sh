@@ -4,8 +4,7 @@
 
 # WALLPAPERS PATH
 terminal=kitty
-PICTURES_DIR="$(xdg-user-dir PICTURES 2>/dev/null || echo "$HOME/Pictures")"
-wallDIR="$PICTURES_DIR/Wallpapers"
+wallDIR=$HOME/Pictures/Wallpapers/
 
 # Directory for swaync
 iDIR="$HOME/.config/swaync/images"

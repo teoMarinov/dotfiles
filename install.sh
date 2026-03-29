@@ -14,12 +14,11 @@ ok()  { echo -e "${GREEN}✔${NC} $1"; }
 warn() { echo -e "${YELLOW}⚠${NC} $1"; }
 
 # ── Packages ───────────────────────────────────────────────────────────────────
-# Added 'base-devel' here as it is required for building AUR packages
 PACMAN_PACKAGES=(
     base-devel git neovim zsh unzip fzf eza bc blueman brightnessctl btop 
     cliphist grim hyprlock jq less loupe keyd noto-fonts-emoji noto-fonts-cjk 
     slurp swaync ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols waybar 
-    xdg-desktop-portal-gtk pavucontrol xdg-utils
+    xdg-desktop-portal-gtk pavucontrol xdg-utils rofi firefox nautilus awww discord github-cli
 )
 
 AUR_PACKAGES=(
@@ -78,6 +77,15 @@ for dir in "${CONFIG_DIRS[@]}"; do
         warn "Missing config directory: $dir"
     fi
 done
+
+log "Settping up nvim config"
+mkdir -p ~/.config
+git clone https://github.com/teoMarinov/nvim.git ~/.config/nvim
+
+log "Move wallpapers"
+mkdir -p ~/Pictures/Wallpapers
+cp ~/dotfiles/wallpapers/* ~/Pictures/Wallpapers
+
 
 # ── Home files (.zshrc, etc) ───────────────────────────────────────────────────
 HOME_FILES=(.zshrc .zprofile)
