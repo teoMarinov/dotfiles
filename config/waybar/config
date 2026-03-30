@@ -16,8 +16,6 @@
     ],
 
     "modules-right": [
-        "pulseaudio",
-        "backlight",
         "temperature",
         "cpu",
         "memory",
