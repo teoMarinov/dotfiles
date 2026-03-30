@@ -129,7 +129,7 @@ apply_image_wallpaper() {
   fi
 
   awww img -o "$focused_monitor" "$image_path" $AWWW_PARAMS
-
+  ln -sf "$image_path" "$HOME/.cache/current_wallpaper.png"
 }
 
 apply_video_wallpaper() {

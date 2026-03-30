@@ -21,7 +21,7 @@ log $SCRIPT_DIR
 CONFIG_DIRS=(hypr kitty ohmyposh rofi swaync waybar)
 
 for dir in "${CONFIG_DIRS[@]}"; do
-  if [ -d "$HOME/.config/$dir"]; then
+  if [ -d "$HOME/.config/$dir" ]; then
    rm -rf "$SCRIPT_DIR/config/$dir"
    cp -r "$HOME/.config/$dir" "$SCRIPT_DIR/config/"
    ok "Updated $dir"

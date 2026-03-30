@@ -2,9 +2,9 @@
     "layer": "top",
     "position": "top",
     "height": 36,
-    "margin-top": 0,
-    "margin-left": 0,
-    "margin-right": 0,
+    "margin-top": 5,
+    "margin-left": 300,
+    "margin-right": 300,
     "spacing": 0,
 
     "modules-left": [
@@ -81,8 +81,8 @@
             "device": "amdgpu_bl1",
            "format": "{icon} {percent}%",
            "format-icons": ["󰃞", "󰃟", "󰃠"],
-           "on-scroll-up": "brightnessctl -d amdgpu_bl1 -e4 -n2 set 5%+",
-           "on-scroll-down": "brightnessctl -d amdgpu_bl1 -e4 -n2 set 5%-",
+           "on-scroll-up": "brightnessctl -d amdgpu_bl2 -e4 -n2 set 5%+",
+           "on-scroll-down": "brightnessctl -d amdgpu_bl2 -e4 -n2 set 5%-",
            "tooltip": false
       },
 

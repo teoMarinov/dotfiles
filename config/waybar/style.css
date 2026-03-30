@@ -38,8 +38,9 @@
 }
 
 window#waybar {
-  background-color: @crust;
+  background-color: rgba(26, 27, 38, 0.95);
   color: @text;
+  border-radius: 20px;
   transition-property: background-color;
   transition-duration: 0.5s;
 }

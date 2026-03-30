@@ -19,6 +19,7 @@ PACMAN_PACKAGES=(
     cliphist grim hyprlock jq less loupe keyd noto-fonts-emoji noto-fonts-cjk 
     slurp swaync ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols waybar 
     xdg-desktop-portal-gtk pavucontrol xdg-utils rofi firefox nautilus awww discord github-cli
+    nodejs npm
 )
 
 AUR_PACKAGES=(
