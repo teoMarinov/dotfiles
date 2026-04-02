@@ -3,8 +3,8 @@
     "position": "top",
     "height": 36,
     "margin-top": 5,
-    "margin-left": 300,
-    "margin-right": 300,
+    "margin-left": 350,
+    "margin-right": 350,
     "spacing": 0,
 
     "modules-left": [
@@ -16,6 +16,8 @@
     ],
 
     "modules-right": [
+        "pulseaudio",
+        "backlight",
         "temperature",
         "cpu",
         "memory",
@@ -65,18 +67,18 @@
      },
 
     "battery": {
-        "format": "{icon} {capacity}",
         "states": {
             "warning": 50,
-            "critical": 25
-          },
-        "format-icons": ["🪫","🔋"],
-        "format-charging": "⚡ {capacity}%",
-        "format-plugged": "🔌",
-      },
+            "critical": 30
+        },
+        "format": "{icon}",
+        "format-charging": "󱐋",
+        "format-full": "",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
 
     "backlight": {
-            "device": "amdgpu_bl1",
+           "device": "amdgpu_bl2",
            "format": "{icon} {percent}%",
            "format-icons": ["󰃞", "󰃟", "󰃠"],
            "on-scroll-up": "brightnessctl -d amdgpu_bl2 -e4 -n2 set 5%+",
