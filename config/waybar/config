@@ -2,9 +2,9 @@
     "layer": "top",
     "position": "top",
     "height": 36,
-    "margin-top": 5,
-    "margin-left": 350,
-    "margin-right": 350,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
     "spacing": 0,
 
     "modules-left": [
