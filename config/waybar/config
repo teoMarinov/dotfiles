@@ -2,9 +2,9 @@
     "layer": "top",
     "position": "top",
     "height": 36,
-    "margin-top": 0,
-    "margin-left": 0,
-    "margin-right": 0,
+    "margin-top": 8,
+    "margin-left": 8,
+    "margin-right": 8,
     "spacing": 0,
 
     "modules-left": [
@@ -21,11 +21,8 @@
         "temperature",
         "cpu",
         "memory",
-        "battery",
-        "hyprland/language",
         "tray",
-        "custom/notification",
-        "custom/power"
+        "hyprland/language",
     ],
 
     // ── Workspaces ──────────────────────────────────────────────
@@ -127,7 +124,7 @@
     "tray": {
         "icon-size": 14,
         "spacing": 10,
-        "show-passive-items": true
+        "show-passive-items": false
     },
 
     // ── Notifications (requires swaync) ──────────────────────────
