@@ -1,6 +1,6 @@
-@define-color base   #1e1e1e;
-@define-color mantle #181818;
-@define-color crust  #232323;
+@define-color base   #1e1e2e;
+@define-color mantle #181825;
+@define-color crust  #0f0f0f;
 
 @define-color text     #cdd6f4;
 @define-color subtext0 #a6adc8;
@@ -28,9 +28,11 @@
 @define-color pink      #f5c2e7;
 @define-color flamingo  #f2cdcd;
 @define-color rosewater #f5e0dc;
+
 * {
-  font-family: "JetBrains Mono", monospace;
+  font-family: Cantarell, "Symbols Nerd Font";
   font-size: 13px;
+  font-weight: bolder;
   border: none;
   border-radius: 0;
   transition: all 0.15s ease;
@@ -39,9 +41,9 @@
 /* ── Notification panel ───────────────────────────────────── */
 
 .control-center {
-  background: @crust;
-  border: 1px solid @blue;
-  border-radius: 10px;
+  background: rgba(12, 12, 12, 0.9);
+  border: 1px solid @surface1;
+  border-radius: 15px;
   padding: 10px;
   margin: 8px;
   color: @text;
@@ -57,21 +59,23 @@
 
 .notification {
   background: @mantle;
-  border: 1px solid @blue;
-  border-radius: 8px;
+  border: 1px solid @surface1;
+  border-radius: 15px;
   padding: 10px 14px;
   margin: 0;
-  color: @blue;
+  color: @text;
 }
 
 .notification:hover {
   background: @base;
-  border-radius: 8px;
+  border-color: #FDD66F;
+  border-radius: 15px;
 }
 
 .notification.critical {
   border-color: @red;
-  background: @red;
+  background: @mantle;
+  color: @red;
 }
 
 /* ── Notification content ─────────────────────────────────── */
@@ -101,7 +105,7 @@
 
 .app-name {
   font-size: 11px;
-  color: @sapphire;
+  color: @blue;
   margin-bottom: 4px;
 }
 
@@ -110,8 +114,8 @@
 .close-button {
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 6px;
-  color: @surface1;
+  border-radius: 15px;
+  color: @surface2;
   padding: 2px 6px;
   font-size: 12px;
   min-width: 0;
@@ -119,27 +123,27 @@
 }
 
 .close-button:hover {
-  background: rgba(220, 80, 70, 0.15);
-  border-color: rgba(220, 80, 70, 0.3);
-  color: #e07070;
+  background: @surface2;
+  border-color: @maroon;
+  color: @maroon;
 }
 
 /* ── Action buttons ───────────────────────────────────────── */
 
 .notification-action {
   background: transparent;
-  border: 1px solid rgba(100, 140, 200, 0.18);
-  border-radius: 6px;
-  color: rgba(180, 195, 225, 0.75);
+  border: 1px solid @surface1;
+  border-radius: 15px;
+  color: @subtext0;
   padding: 4px 12px;
   margin: 6px 4px 0;
   font-size: 12px;
 }
 
 .notification-action:hover {
-  background: rgba(88, 140, 255, 0.18);
-  border-color: rgba(88, 140, 255, 0.45);
-  color: #5b9cf6;
+  background: @surface2;
+  border-color: #FDD66F;
+  color: #FDD66F;
 }
 
 /* ── Control center header ────────────────────────────────── */
@@ -150,47 +154,81 @@
 
 .control-center-clear-all {
   background: transparent;
-  border: 1px solid rgba(100, 140, 200, 0.18);
-  border-radius: 6px;
-  color: rgba(160, 175, 210, 0.55);
+  border: 1px solid @surface1;
+  border-radius: 15px;
+  color: @subtext0;
   padding: 4px 12px;
   font-size: 12px;
 }
 
 .control-center-clear-all:hover {
-  background: rgba(220, 80, 70, 0.12);
-  border-color: rgba(220, 80, 70, 0.3);
-  color: #e07070;
+  background: @surface2;
+  border-color: @maroon;
+  color: @maroon;
 }
 
 /* ── Do not disturb toggle ────────────────────────────────── */
 
 .toggle-button {
   background: transparent;
-  border: 1px solid rgba(100, 140, 200, 0.18);
-  border-radius: 6px;
-  color: rgba(160, 175, 210, 0.55);
+  border: 1px solid @surface1;
+  border-radius: 15px;
+  color: @subtext0;
   padding: 4px 10px;
   font-size: 12px;
 }
 
 .toggle-button:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(210, 220, 240, 0.9);
+  background: @surface2;
+  color: @text;
 }
 
 .toggle-button.active {
-  background: rgba(88, 140, 255, 0.18);
-  border-color: rgba(88, 140, 255, 0.45);
-  color: #5b9cf6;
+  background: @surface2;
+  border-color: #FDD66F;
+  color: #FDD66F;
+}
+
+/* DnD switch (GTK switch widget) */
+switch {
+  background: @surface1;
+  border-radius: 15px;
+  border: 1px solid @surface1;
+}
+
+switch:checked {
+  background: #FDD66F;
+  border-color: #FDD66F;
+}
+
+switch slider {
+  background: @text;
+  border-radius: 15px;
+  border: none;
+}
+
+switch:checked slider {
+  background: @crust;
 }
 
 /* ── Empty state ──────────────────────────────────────────── */
 
 .empty-state {
-  color: rgba(160, 175, 210, 0.3);
+  color: @overlay0;
   font-size: 13px;
   padding: 20px;
+}
+
+.notification-default-action {
+  background: transparent;
+  border-radius: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-default-action:hover {
+  background: @base;
+  border-radius: 15px;
 }
 
 .notification-content *:hover,
@@ -198,7 +236,7 @@
 .summary:hover,
 .body:hover {
   background: transparent;
-  border-radius: 8px;
+  border-radius: 15px;
 }
 
 label:hover {
