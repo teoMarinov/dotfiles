@@ -127,7 +127,15 @@ apply_image_wallpaper() {
   fi
 
   awww img -o "$focused_monitor" "$image_path" $AWWW_PARAMS
+  ln -sf "$image_path" "$HOME/.cache/current_wallpaper_${focused_monitor}.png"
   ln -sf "$image_path" "$HOME/.cache/current_wallpaper.png"
+
+  # Seed any other connected monitors that don't yet have a per-monitor wallpaper
+  while IFS= read -r mon; do
+    [[ -z "$mon" || "$mon" == "$focused_monitor" ]] && continue
+    [[ -e "$HOME/.cache/current_wallpaper_${mon}.png" ]] && continue
+    ln -sf "$image_path" "$HOME/.cache/current_wallpaper_${mon}.png"
+  done < <(hyprctl monitors -j | jq -r '.[].name')
 }
 
 apply_video_wallpaper() {

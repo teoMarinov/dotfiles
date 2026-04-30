@@ -34,12 +34,12 @@
     Cantarell,
     Symbols Nerd Font;
   font-weight: bolder;
-  font-size: 14px;
+  font-size: 14;
 }
 
 window#waybar {
   /* background-color: rgba(26, 27, 38, 0.9); */
-  background-color: rgba(12, 12, 12, 0.9);
+  background-color: rgba(12, 12, 12, 0.85);
   color: @text;
   border-radius: 0px;
   transition-property: background-color;
@@ -49,15 +49,6 @@ window#waybar {
 window#waybar.hidden {
   opacity: 0.2;
 }
-
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
 
 window#waybar.termite {
   background-color: #3f3f3f;

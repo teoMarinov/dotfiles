@@ -30,7 +30,7 @@
 @define-color rosewater #f5e0dc;
 
 * {
-  font-family: Cantarell, "Symbols Nerd Font";
+  font-family: "JetBrains Mono", monospace;
   font-size: 13px;
   font-weight: bolder;
   border: none;
@@ -68,7 +68,7 @@
 
 .notification:hover {
   background: @base;
-  border-color: #FDD66F;
+  border-color: #fdd66f;
   border-radius: 15px;
 }
 
@@ -142,8 +142,8 @@
 
 .notification-action:hover {
   background: @surface2;
-  border-color: #FDD66F;
-  color: #FDD66F;
+  border-color: #fdd66f;
+  color: #fdd66f;
 }
 
 /* ── Control center header ────────────────────────────────── */
@@ -185,8 +185,8 @@
 
 .toggle-button.active {
   background: @surface2;
-  border-color: #FDD66F;
-  color: #FDD66F;
+  border-color: #fdd66f;
+  color: #fdd66f;
 }
 
 /* DnD switch (GTK switch widget) */
@@ -197,8 +197,8 @@ switch {
 }
 
 switch:checked {
-  background: #FDD66F;
-  border-color: #FDD66F;
+  background: #fdd66f;
+  border-color: #fdd66f;
 }
 
 switch slider {
