@@ -2,9 +2,9 @@
     "layer": "top",
     "position": "top",
     "height": 36,
-    "margin-top": 8,
-    "margin-left": 8,
-    "margin-right": 8,
+    "margin-top": 2,
+    "margin-left": 4,
+    "margin-right": 4,
     "spacing": 0,
 
     "modules-left": [
@@ -38,7 +38,26 @@
     // ── Clock ────────────────────────────────────────────────────
     "clock": {
         "format": "{:%H:%M %a, %b %d}",
-        "tooltip": false,
+        "locale": "en_GB.UTF-8",
+        "tooltip-format": "<tt><big>{calendar}</big></tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "weeks-pos": "",
+            "on-scroll": 0,
+            "format": {
+                "months":     "<span color='#cdd6f4'><b>{}</b></span>",
+                "days":       "<span color='#cdd6f4'>{}</span>",
+                "weekdays":   "<span color='#fdd66f'><b>{}</b></span>",
+                "today":      "<span color='#f38ba8'><b><u>{}</u></b></span>"
+            }
+        },
+       "actions": {
+         "on-scroll-down": "shift_up",
+         "on-scroll-up": "shift_down",
+         "on-click-middle": "shift_reset",
+         "on-click-right": "mode",
+  },
     },
 
      "temperature": {

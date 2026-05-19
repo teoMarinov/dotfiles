@@ -38,8 +38,8 @@
 }
 
 window#waybar {
-  /* background-color: rgba(26, 27, 38, 0.9); */
-  background-color: rgba(12, 12, 12, 0.85);
+  /* background-color: rgba(26, 27, 38, 1); */
+  background-color: rgba(12, 12, 12, 0.9);
   color: @text;
   border-radius: 0px;
   transition-property: background-color;
