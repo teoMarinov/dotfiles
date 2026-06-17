@@ -8,9 +8,9 @@ MAIN_ADDRS=$(hyprctl clients -j | jq -r ".[] | select(.workspace.id == $CURRENT_
 SHELF_ADDRS=$(hyprctl clients -j | jq -r ".[] | select(.workspace.name == \"$SPECIAL_NAME\") | .address")
 
 for addr in $MAIN_ADDRS; do
-    hyprctl dispatch movetoworkspacesilent "$SPECIAL_NAME,address:$addr"
+    hyprctl dispatch "hl.dsp.window.move({ workspace = \"$SPECIAL_NAME\", window = \"address:$addr\", follow = false })"
 done
 
 for addr in $SHELF_ADDRS; do
-    hyprctl dispatch movetoworkspacesilent "$CURRENT_WS_NAME,address:$addr"
+    hyprctl dispatch "hl.dsp.window.move({ workspace = \"$CURRENT_WS_NAME\", window = \"address:$addr\", follow = false })"
 done

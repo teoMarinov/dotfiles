@@ -41,9 +41,13 @@ hl.bind(mod .. " + SPACE",      hl.dsp.window.fullscreen({ mode = 1 })) -- maxim
 hl.bind(mod .. " + SHIFT + F",  hl.dsp.window.float())
 hl.bind(mod .. " + SHIFT + Return", hl.dsp.exec_cmd(scriptsDir .. "/Dropterminal.sh " .. defaults.term))
 
--- Desktop zooming (double / halve the cursor zoom factor)
-hl.bind(mod .. " + ALT + mouse_down",
-  hl.dsp.exec_cmd([[hyprctl keyword cursor:zoom_factor "$(hyprctl getoption cursor:zoom_factor | awk 'NR==1 {factor = $2; if (factor < 1) {factor = 1}; print factor * 2.0}')"]]))
+-- Desktop zooming (double the cursor zoom factor on SUPER+ALT+scroll-down).
+-- Done natively: `hyprctl keyword` no longer works under a Lua config.
+hl.bind(mod .. " + ALT + mouse_down", function()
+  local f = tonumber(hl.get_config("cursor:zoom_factor")) or 1
+  if f < 1 then f = 1 end
+  hl.config({ cursor = { zoom_factor = f * 2.0 } })
+end)
 hl.bind("SHIFT_L + ALT_L",      hl.dsp.exec_cmd(scriptsDir .. "/SwitchKeyboardLayout.sh"))
 
 -- ── System control ─────────────────────────────────────────────────────────

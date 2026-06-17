@@ -5,11 +5,11 @@ STATE_FILE="$HOME/.cache/touchpad_disabled"
 iDIR="$HOME/.config/swaync/images"
 
 if [[ -f "$STATE_FILE" ]]; then
-  hyprctl keyword "device[$DEV]:enabled" true >/dev/null
+  hyprctl eval "hl.device({ name = \"$DEV\", enabled = true })" >/dev/null
   rm -f "$STATE_FILE"
   notify-send -i "$iDIR/info.png" "Touchpad" "Enabled"
 else
-  hyprctl keyword "device[$DEV]:enabled" false >/dev/null
+  hyprctl eval "hl.device({ name = \"$DEV\", enabled = false })" >/dev/null
   touch "$STATE_FILE"
   notify-send -i "$iDIR/info.png" "Touchpad" "Disabled"
 fi

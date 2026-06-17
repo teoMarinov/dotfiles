@@ -20,5 +20,5 @@ case "$chosen" in
     "$SHUTDOWN")    systemctl poweroff ;;
     "$REBOOT")      systemctl reboot ;;
     "$SUSPEND")     systemctl suspend ;;
-    "$LOGOUT")      hyprctl dispatch exit ;;
+    "$LOGOUT")      hyprctl dispatch 'hl.dsp.exit()' ;;
 esac

@@ -15,10 +15,10 @@ HAS_AOC1=$(echo "$MONITORS" | grep -c "$AOC_1")
 HAS_AOC2=$(echo "$MONITORS" | grep -c "$AOC_2")
 
 if [ "$HAS_AOC1" -eq 1 ] && [ "$HAS_AOC2" -eq 1 ]; then
-    hyprctl keyword monitor "desc:$AOC_1,1920x1080@144,1600x0,1"
-    hyprctl keyword monitor "desc:$AOC_2,1920x1080@60,3520x0,1"
+    hyprctl eval "hl.monitor({ output = \"desc:$AOC_1\", mode = \"1920x1080@144\", position = \"1600x0\", scale = 1 })"
+    hyprctl eval "hl.monitor({ output = \"desc:$AOC_2\", mode = \"1920x1080@60\", position = \"3520x0\", scale = 1 })"
 elif [ "$HAS_AOC2" -eq 1 ]; then
-    hyprctl keyword monitor "desc:$AOC_2,1920x1080@60,1600x0,1"
+    hyprctl eval "hl.monitor({ output = \"desc:$AOC_2\", mode = \"1920x1080@60\", position = \"1600x0\", scale = 1 })"
 elif [ "$HAS_AOC1" -eq 1 ]; then
-    hyprctl keyword monitor "desc:$AOC_1,1920x1080@144,1600x0,1"
+    hyprctl eval "hl.monitor({ output = \"desc:$AOC_1\", mode = \"1920x1080@144\", position = \"1600x0\", scale = 1 })"
 fi
