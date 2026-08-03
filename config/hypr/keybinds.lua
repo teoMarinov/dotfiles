@@ -106,18 +106,18 @@ end
 for i = 1, 9 do
   hl.bind(mod .. " + code:" .. (9 + i),         hl.dsp.focus({ workspace = i }))
   hl.bind(mod .. " + CTRL + code:" .. (9 + i),  hl.dsp.window.move({ workspace = i }))
-  hl.bind(mod .. " + SHIFT + code:" .. (9 + i), hl.dsp.window.move({ workspace = i, silent = true }))
+  hl.bind(mod .. " + SHIFT + code:" .. (9 + i), hl.dsp.window.move({ workspace = i, follow = false }))
 end
 
 hl.bind(mod .. " + grave",         hl.dsp.focus({ workspace = 10 }))
 hl.bind(mod .. " + CTRL + grave",  hl.dsp.window.move({ workspace = 10 }))
-hl.bind(mod .. " + SHIFT + grave", hl.dsp.window.move({ workspace = 10, silent = true }))
+hl.bind(mod .. " + SHIFT + grave", hl.dsp.window.move({ workspace = 10, follow = false }))
 
 -- Move to adjacent workspace
 hl.bind(mod .. " + CTRL + bracketleft",   hl.dsp.window.move({ workspace = "-1" }))
 hl.bind(mod .. " + CTRL + bracketright",  hl.dsp.window.move({ workspace = "+1" }))
-hl.bind(mod .. " + SHIFT + bracketleft",  hl.dsp.window.move({ workspace = "-1", silent = true }))
-hl.bind(mod .. " + SHIFT + bracketright", hl.dsp.window.move({ workspace = "+1", silent = true }))
+hl.bind(mod .. " + SHIFT + bracketleft",  hl.dsp.window.move({ workspace = "-1", follow = false }))
+hl.bind(mod .. " + SHIFT + bracketright", hl.dsp.window.move({ workspace = "+1", follow = false }))
 
 -- Layout switching (was: hyprctl keyword general:layout ...)
 hl.bind(mod .. " + P",         function() hl.config({ general = { layout = "master" } }) end)

@@ -14,3 +14,10 @@ done
 for addr in $SHELF_ADDRS; do
     hyprctl dispatch "hl.dsp.window.move({ workspace = \"$CURRENT_WS_NAME\", window = \"address:$addr\", follow = false })"
 done
+
+# The moves above are silent (follow = false), so nothing on the current
+# workspace ends up focused. Focus the last window we brought in from the shelf.
+FOCUS_ADDR=$(echo "$SHELF_ADDRS" | tail -n1)
+if [ -n "$FOCUS_ADDR" ]; then
+    hyprctl dispatch "hl.dsp.focus({ window = \"address:$FOCUS_ADDR\" })"
+fi
