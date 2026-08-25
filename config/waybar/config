@@ -7,6 +7,11 @@
     "margin-right": 4,
     "spacing": 0,
 
+    // ── Auto-hide (see hypr/scripts/WaybarAutoHide.sh) ─────────────
+    "start_hidden": true,
+    "on-sigusr1": "show",
+    "on-sigusr2": "hide",
+
     "modules-left": [
         "hyprland/workspaces"
     ],
