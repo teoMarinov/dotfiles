@@ -91,11 +91,6 @@ alias bbd='cd ~/workspace/balkanbaltic/documentation'
 alias bbs='cd ~/workspace/balkanbaltic/api/'
 alias bbw='cd ~/workspace/balkanbaltic/web'
 alias bba='cd ~/workspace/balkanbaltic/admin/'
-alias du='docker compose up -d'
-alias db='docker compose up --build -d'
-alias dd='docker compose down'
-alias dp='docker compose ps'
-alias dl='docker compose logs'
 alias vsc='code . && exit'
 
 sts() {
