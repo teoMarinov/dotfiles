@@ -26,7 +26,7 @@ hl.config({
   input = {
     kb_layout  = "us,bg",
     kb_variant = ",phonetic",
-    kb_options = "caps:escape,grp:alt_shift_toggle",
+    kb_options = "grp:sclk_toggle",
     kb_model   = "",
     kb_rules   = "",
     repeat_rate  = 70,

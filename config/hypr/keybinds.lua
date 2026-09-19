@@ -51,7 +51,6 @@ hl.bind(mod .. " + ALT + mouse_down", function()
 	end
 	hl.config({ cursor = { zoom_factor = f * 2.0 } })
 end)
-hl.bind("SHIFT_L + ALT_L", hl.dsp.exec_cmd(scriptsDir .. "/SwitchKeyboardLayout.sh"))
 
 -- Scroll through existing workspaces
 hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
