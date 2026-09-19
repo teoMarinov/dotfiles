@@ -53,6 +53,15 @@ hl.bind(mod .. " + ALT + mouse_down", function()
 end)
 hl.bind("SHIFT_L + ALT_L", hl.dsp.exec_cmd(scriptsDir .. "/SwitchKeyboardLayout.sh"))
 
+-- Scroll through existing workspaces
+hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+
+-- Jump to the previous (oldest-focused) workspace. Was implicitly handled by
+-- binds:workspace_back_and_forth (re-pressing the active workspace's bind);
+-- that's now off (see system-settings.lua) so this is the explicit trigger.
+hl.bind("ALT + Tab", hl.dsp.focus({ workspace = "previous" }))
+
 -- ── System control ─────────────────────────────────────────────────────────
 hl.bind("CTRL + ALT + Delete", hl.dsp.exit())
 hl.bind(mod .. " + Q", hl.dsp.window.close())

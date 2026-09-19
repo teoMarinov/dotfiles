@@ -8,7 +8,7 @@
     "spacing": 0,
 
     // ── Auto-hide (see hypr/scripts/WaybarAutoHide.sh) ─────────────
-    "start_hidden": true,
+    "start_hidden": false,
     "on-sigusr1": "show",
     "on-sigusr2": "hide",
 

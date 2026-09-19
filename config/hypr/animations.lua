@@ -1,4 +1,4 @@
--- Animations (was configs/Animations.conf)
+-- Animations (was configs/Animations.conf)anima
 -- Animations are globally disabled (as in the original). The curves and per-leaf
 -- animations are still defined so they take effect immediately if you flip
 -- `enabled` to true here.

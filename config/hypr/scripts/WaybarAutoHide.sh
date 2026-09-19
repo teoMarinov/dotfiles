@@ -7,17 +7,17 @@ SHOW_AT=2     # px from the top edge that triggers a reveal
 HIDE_AT=45    # px past which the bar hides again (bar height + margin + buffer)
 POLL=0.1      # seconds between cursor checks
 
-state="hidden"
+state="shown"
 
 while true; do
     read -r x y < <(hyprctl cursorpos | tr -d ',')
 
-    if [[ "$state" == "hidden" && "$y" -le "$SHOW_AT" ]]; then
-        pkill -SIGUSR1 -x waybar
-        state="shown"
-    elif [[ "$state" == "shown" && "$y" -gt "$HIDE_AT" ]]; then
+    if [[ "$state" == "shown" && "$y" -gt "$HIDE_AT" ]]; then
         pkill -SIGUSR2 -x waybar
         state="hidden"
+    elif [[ "$state" == "hidden" && "$y" -le "$SHOW_AT" ]]; then
+        pkill -SIGUSR1 -x waybar
+        state="shown"
     fi
 
     sleep "$POLL"
