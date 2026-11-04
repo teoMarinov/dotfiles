@@ -19,13 +19,19 @@ local scriptsDir = configDir .. "/scripts"
 
 -- ── System / menus ─────────────────────────────────────────────────────────
 hl.bind(mod .. " + A", hl.dsp.exec_cmd("rofi -show drun"))
-hl.bind(mod .. " + B", hl.dsp.exec_cmd("firefox"))
+hl.bind(mod .. " + B", hl.dsp.exec_cmd("zen-browser"))
 hl.bind(mod .. " + Return", hl.dsp.exec_cmd(defaults.term))
 hl.bind(mod .. " + E", hl.dsp.exec_cmd(scriptsDir .. "/RaiseNautilus.sh"))
 
 -- Features / extras
 hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd(scriptsDir .. "/EmojiManager.sh"))
-hl.bind(mod .. " + CTRL + S", hl.dsp.exec_cmd("rofi -show window"))
+-- Alt-Tab style switcher: hold SUPER, tap Tab/Shift+Tab, release SUPER to switch.
+-- non_consuming so repeated SUPER+Tab presses also reach the open rofi window.
+hl.bind(
+	mod .. " + Tab",
+	hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/rofi/scripts/window-switcher.sh"),
+	{ non_consuming = true }
+)
 hl.bind(mod .. " + V", hl.dsp.exec_cmd(scriptsDir .. "/ClipManager.sh"))
 hl.bind(mod .. " + SHIFT + W", hl.dsp.exec_cmd(scriptsDir .. "/WallpaperManager.sh"))
 hl.bind(mod .. " + CTRL + W", hl.dsp.exec_cmd(scriptsDir .. "/RandomWallpaper.sh"))
@@ -59,7 +65,7 @@ hl.bind(mod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 -- Jump to the previous (oldest-focused) workspace. Was implicitly handled by
 -- binds:workspace_back_and_forth (re-pressing the active workspace's bind);
 -- that's now off (see system-settings.lua) so this is the explicit trigger.
-hl.bind("ALT + Tab", hl.dsp.focus({ workspace = "previous" }))
+hl.bind(mod .. " + S", hl.dsp.focus({ workspace = "previous" }))
 
 -- ── System control ─────────────────────────────────────────────────────────
 hl.bind("CTRL + ALT + Delete", hl.dsp.exit())
@@ -129,6 +135,9 @@ end
 for _, d in ipairs(dirs) do
 	hl.bind(mod .. " + CTRL + ALT + " .. d[1], hl.dsp.workspace.move({ monitor = d[2] }))
 end
+-- ...and with left/right mouse click (mouse:272 = left, mouse:273 = right)
+hl.bind(mod .. " + CTRL + ALT + mouse:272", hl.dsp.workspace.move({ monitor = "l" }))
+hl.bind(mod .. " + CTRL + ALT + mouse:273", hl.dsp.workspace.move({ monitor = "r" }))
 
 -- ── Workspaces ─────────────────────────────────────────────────────────────
 -- code:10 = key "1" ... code:18 = key "9"; grave = workspace 10
@@ -162,7 +171,7 @@ end)
 -- ── Special workspace ──────────────────────────────────────────────────────
 hl.bind(mod .. " + SHIFT + U", hl.dsp.window.move({ workspace = "special" }))
 hl.bind(mod .. " + U", hl.dsp.workspace.toggle_special())
-hl.bind(mod .. " + S", hl.dsp.exec_cmd(scriptsDir .. "/WorkspaceSwap.sh"))
+hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd(scriptsDir .. "/WorkspaceSwap.sh"))
 
 -- ── Mouse binds ────────────────────────────────────────────────────────────
 hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
@@ -175,3 +184,6 @@ hl.bind(mod .. " + G", hl.dsp.exec_cmd("steam"))
 hl.bind(mod .. " + I", hl.dsp.exec_cmd("an-anime-game-launcher"))
 hl.bind(mod .. " + equal", hl.dsp.exec_cmd("kate"))
 hl.bind(mod .. " + SHIFT + C", hl.dsp.exec_cmd("rofi -show calc -modi calc -no-show-match -no-sort"))
+
+-- ── Hyprwspr ────────────────────────────────────────────────────────────────
+hl.bind(mod .. " + ALT + SPACE", hl.dsp.exec_cmd("/usr/lib/hyprwhspr/config/hyprland/hyprwhspr-tray.sh record"))

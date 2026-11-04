@@ -66,8 +66,20 @@ hl.window_rule({
 })
 
 hl.window_rule({
+	name = "transparent_vscodium",
+	match = { class = "^(VSCodium)$" },
+	opacity = "0.85",
+})
+
+hl.window_rule({
 	name = "slack_allow_notification_focus",
 	match = { class = "^(slack)$" },
+	focus_on_activate = true,
+})
+
+hl.window_rule({
+	name = "zen-browser-focus",
+	match = { class = "^(zen)$" },
 	focus_on_activate = true,
 })
 
@@ -76,3 +88,4 @@ hl.layer_rule({
 	match = { namespace = "^(rofi)$" },
 	no_anim = true,
 })
+
