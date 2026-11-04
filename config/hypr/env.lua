@@ -26,7 +26,11 @@ hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.env("NVD_BACKEND", "direct")
 hl.env("GSK_RENDERER", "ngl")
 
-hl.env("LIBVA_DRIVER_NAME", "nvidia")
+-- Removed: forced the NVIDIA VA-API driver session-wide, but the compositor and
+-- most apps (Discord/Electron, OBS) render on the AMD iGPU (renderD129).
+-- nvidia_drv_video.so on an AMD render node deadlocks hw video decode.
+-- Leave unset so libva auto-picks radeonsi on AMD / nvidia on the dGPU.
+-- hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("__GL_GSYNC_ALLOWED", "1")
 
 hl.env("AQ_DRM_DEVICES", "/dev/dri/card2:/dev/dri/card1")

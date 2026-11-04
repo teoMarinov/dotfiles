@@ -43,13 +43,13 @@ hl.window_rule({
 	move = "(cursor_x-(window_w*0.5)) (cursor_y-(window_h*0.5))",
 })
 
-hl.window_rule({
-	name = "floating_kitty",
-	match = { class = "(floating_shell)" },
-	float = true,
-	move = "385 135",
-	size = "1150 840",
-})
+-- hl.window_rule({
+-- 	name = "floating_kitty",
+-- 	match = { class = "(floating_shell)" },
+-- 	float = true,
+-- 	move = "385 135",
+-- 	size = "1150 840",
+-- })
 
 hl.window_rule({
 	name = "pavucontrol_popup",

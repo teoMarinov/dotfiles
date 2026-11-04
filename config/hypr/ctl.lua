@@ -1,6 +1,8 @@
 -- Multimedia & brightness keys (was configs/CTL.conf)
 -- bindel -> { locked = true, repeating = true }   bindl -> { locked = true }
 
+local dim = require("dim")
+
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),        { locked = true, repeating = true })
@@ -14,3 +16,10 @@ hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = tr
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+
+-- Global software dim (all monitors, see dim.lua). The externals have no
+-- hardware brightness left, so SUPER + the brightness keys drives the gamma
+-- ramp; bare brightness keys stay on the eDP-2 backlight above.
+hl.bind("SUPER + XF86MonBrightnessDown", function() dim.step(-dim.STEP) end, { locked = true, repeating = true })
+hl.bind("SUPER + XF86MonBrightnessUp",   function() dim.step(dim.STEP) end,  { locked = true, repeating = true })
+hl.bind("SUPER + SHIFT + XF86MonBrightnessUp", function() dim.set(100, true) end, { locked = true })

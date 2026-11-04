@@ -20,5 +20,6 @@ require("animations")        -- bezier curves + animations (was configs/Animatio
 require("window-rules")      -- window + layer rules (was configs/WindowRules.conf)
 require("workspace-rules")   -- workspace -> monitor assignments (was configs/WorkSpaceRules.conf)
 require("keybinds")          -- keybindings (was configs/Keybinds.conf)
+require("dim")               -- global software dim via wl-gammarelay-rs (new)
 require("ctl")               -- multimedia / brightness keys (was configs/CTL.conf)
 require("autostart")         -- startup apps (was configs/Startup_Apps.conf + initial-boot.sh)
