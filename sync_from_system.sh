@@ -30,4 +30,18 @@ for dir in "${CONFIG_DIRS[@]}"; do
   fi
 done
 
-ok "Dotfiels copied from system"
+log "Copying home files"
+
+HOME_FILES=(.zshrc .zprofile)
+mkdir -p "$SCRIPT_DIR/home"
+
+for file in "${HOME_FILES[@]}"; do
+  if [ -f "$HOME/$file" ]; then
+    cp "$HOME/$file" "$SCRIPT_DIR/home/$file"
+    ok "Updated $file"
+  else
+    warn "Missing home file: $HOME/$file"
+  fi
+done
+
+ok "Dotfiles copied from system"

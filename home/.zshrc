@@ -39,6 +39,10 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 bindkey '^ ' autosuggest-accept
+bindkey '^H' backward-kill-word      # Ctrl+Backspace
+bindkey '^[[3;5~' kill-word          # Ctrl+Delete
+bindkey '^[[1;5D' backward-word      # Ctrl+Left
+bindkey '^[[1;5C' forward-word       # Ctrl+Right
 
 # History
 HISTSIZE=5000
@@ -80,9 +84,9 @@ alias ta='tmux attach'
 alias tl='tmux ls'
 alias battert='upower -i $(upower -e | grep BAT)'
 alias dot='cd ~/dotfiles'
-alias c='claude'
-alias C='claude --continue'
+alias C='claude'
 alias cl='claude --resume'
+alias CL='claude --continue'
 alias op='opencode'
 alias y='yazi'
 alias bat='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
@@ -92,6 +96,8 @@ alias bbs='cd ~/workspace/balkanbaltic/api/'
 alias bbw='cd ~/workspace/balkanbaltic/web'
 alias bba='cd ~/workspace/balkanbaltic/admin/'
 alias vsc='code . && exit'
+alias c='codium . && exit'
+alias h='cd ~/Documents/health/'
 
 sts() {
   case "$1" in                                                        
