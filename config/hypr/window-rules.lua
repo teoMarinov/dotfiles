@@ -83,12 +83,12 @@ hl.window_rule({
 	focus_on_activate = true,
 })
 
--- Screenshot annotator (scripts/ScreenShot.sh): float it centered over the screen.
+-- Screenshot annotator (scripts/ScreenShot.sh): float it centered on the cursor.
 hl.window_rule({
 	name = "satty-float",
 	match = { class = "^(com.gabm.satty)$" },
 	float = true,
-	center = true,
+	move = "(cursor_x-(window_w*0.5)) (cursor_y-(window_h*0.5))",
 })
 
 -- Screenshot freeze + selection overlays: no fade, or grim could catch a
