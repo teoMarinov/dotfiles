@@ -1,151 +1,49 @@
-time=$(date "+%d-%b_%H-%M-%S")
+#!/usr/bin/env bash
+# Lightshot-style screenshot (bound to Print in keybinds.lua):
+#   1. freeze every monitor on the current frame   (hyprpicker)
+#   2. drag to select an area — Esc cancels        (slurp)
+#   3. grab that area from the frozen frame        (grim)
+#   4. draw on it, then copy / save                (satty, see ~/.config/satty/config.toml)
+
+set -u
+
 dir="$(xdg-user-dir PICTURES)/Screenshots"
-file="Screenshot_${time}_${RANDOM}.png"
+mkdir -p "$dir"
 
-iDIR="$HOME/.config/swaync/icons"
-iDoR="$HOME/.config/swaync/images"
-
-active_window_class=$(hyprctl -j activewindow | jq -r '(.class)')
-active_window_file="Screenshot_${time}_${active_window_class}.png"
-active_window_path="${dir}/${active_window_file}"
-
-notify_cmd_shot="${notify_cmd_base} -i ${iDIR}/picture.png "
-notify_cmd_shot_win="${notify_cmd_base} -i ${iDIR}/picture.png "
-
-# notify and view screenshot
-notify_view() {
-    if [[ "$1" == "active" ]]; then
-        if [[ -e "${active_window_path}" ]]; then
-            resp=$(timeout 5 ${notify_cmd_shot_win} " Screenshot of:" " ${active_window_class} Saved.")
-            case "$resp" in
-				action1)
-					xdg-open "${active_window_path}" &
-					;;
-				action2)
-					rm "${active_window_path}" &
-					;;
-			esac
-        else
-            ${notify_cmd_NOT} " Screenshot of:" " ${active_window_class} NOT Saved."
-        fi
-
-    elif [[ "$1" == "swappy" ]]; then
-		resp=$(${notify_cmd_shot} " Screenshot:" " Captured by Swappy")
-		case "$resp" in
-			action1)
-				swappy -f - <"$tmpfile"
-				;;
-			action2)
-				rm "$tmpfile"
-				;;
-		esac
-
-    else
-        local check_file="${dir}/${file}"
-        if [[ -e "$check_file" ]]; then
-            resp=$(timeout 5 ${notify_cmd_shot} " Screenshot" " Saved")
-			case "$resp" in
-				action1)
-					xdg-open "${check_file}" &
-					;;
-				action2)
-					rm "${check_file}" &
-					;;
-			esac
-        else
-            ${notify_cmd_NOT} " Screenshot" " NOT Saved"
-        fi
-    fi
+tmp=$(mktemp --suffix=.png)
+freeze_pid=
+cleanup() {
+	[[ -n $freeze_pid ]] && kill "$freeze_pid" 2>/dev/null
+	rm -f "$tmp"
 }
+trap cleanup EXIT
 
-# countdown
-countdown() {
-	for sec in $(seq $1 -1 1); do
-		# notify-send -h string:x-canonical-private-synchronous:shot-notify -t 1000 -i "$iDIR"/timer.png  " Taking shot" " in: $sec secs"
-		sleep 1
-	done
-}
+# Ignore repeat presses while a selection is already on screen
+# (the lock is released before satty opens, so a new shot can start then).
+exec 9>"${XDG_RUNTIME_DIR:-/tmp}/screenshot.lock"
+flock -n 9 || exit 0
 
-# take shots
-shotnow() {
-	cd ${dir} && grim - | tee "$file" | wl-copy
-	sleep 2
-	notify_view
-}
+# 1. Freeze. hyprpicker needs a moment to put the still frame up.
+hyprpicker --render-inactive --no-zoom --quiet >/dev/null 2>&1 &
+freeze_pid=$!
+sleep 0.2
 
-shot5() {
-	countdown '5'
-	sleep 1 && cd ${dir} && grim - | tee "$file" | wl-copy
-	sleep 1
-	notify_view
-}
+# 2. Select: dim outside the selection, clear inside, show dimensions.
+geom=$(slurp -d -b '#00000077' -s '#00000000' -c '#ffffffff' -w 1) || exit 0
+[[ -n $geom ]] || exit 0
 
-shot10() {
-	countdown '10'
-	sleep 1 && cd ${dir} && grim - | tee "$file" | wl-copy
-	notify_view
-}
+# 3. Capture (still frozen, so this is the frame from when Print was pressed).
+grim -g "$geom" "$tmp" || exit 1
+kill "$freeze_pid" 2>/dev/null
+freeze_pid=
+exec 9>&-
 
-shotwin() {
-	w_pos=$(hyprctl activewindow | grep 'at:' | cut -d':' -f2 | tr -d ' ' | tail -n1)
-	w_size=$(hyprctl activewindow | grep 'size:' | cut -d':' -f2 | tr -d ' ' | tail -n1 | sed s/,/x/g)
-	cd ${dir} && grim -g "$w_pos $w_size" - | tee "$file" | wl-copy
-	notify_view
-}
+# grim captures at the monitor's pixel scale; tell satty so the window shows
+# the crop at the size it had on screen (eDP-2 is 1.6x).
+read -r x y _ <<<"${geom//,/ }"
+scale=$(hyprctl monitors -j | jq -r --argjson x "$x" --argjson y "$y" '
+	[.[] | select($x >= .x and $x < .x + .width / .scale
+	          and $y >= .y and $y < .y + .height / .scale) | .scale][0] // 1')
 
-shotarea() {
-	tmpfile=$(mktemp)
-	grim -g "$(slurp)" - >"$tmpfile"
-
-  # Copy with saving
-	if [[ -s "$tmpfile" ]]; then
-		wl-copy <"$tmpfile"
-		mv "$tmpfile" "$dir/$file"
-	fi
-	notify_view
-}
-
-shotactive() {
-    active_window_class=$(hyprctl -j activewindow | jq -r '(.class)')
-    active_window_file="Screenshot_${time}_${active_window_class}.png"
-    active_window_path="${dir}/${active_window_file}"
-
-    hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | grim -g - "${active_window_path}"
-	sleep 1
-    notify_view "active"
-}
-
-shotswappy() {
-	tmpfile=$(mktemp)
-	grim -g "$(slurp)" - >"$tmpfile" 
-
-  # Copy without saving
-  if [[ -s "$tmpfile" ]]; then
-		wl-copy <"$tmpfile"
-    notify_view "swappy"
-  fi
-}
-
-if [[ ! -d "$dir" ]]; then
-	mkdir -p "$dir"
-fi
-
-if [[ "$1" == "--now" ]]; then
-	shotnow
-elif [[ "$1" == "--in5" ]]; then
-	shot5
-elif [[ "$1" == "--in10" ]]; then
-	shot10
-elif [[ "$1" == "--win" ]]; then
-	shotwin
-elif [[ "$1" == "--area" ]]; then
-	shotarea
-elif [[ "$1" == "--active" ]]; then
-	shotactive
-elif [[ "$1" == "--swappy" ]]; then
-	shotswappy
-else
-	echo -e "Available Options : --now --in5 --in10 --win --area --active --swappy"
-fi
-
-exit 0
+# 4. Annotate. Enter/Ctrl+C copies, Ctrl+S saves, Esc discards.
+satty --filename "$tmp" --input-scale "$scale"

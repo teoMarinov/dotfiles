@@ -72,10 +72,8 @@ hl.bind("CTRL + ALT + Delete", hl.dsp.exit())
 hl.bind(mod .. " + Q", hl.dsp.window.close())
 hl.bind(mod .. " + SHIFT + Q", hl.dsp.exec_cmd(scriptsDir .. "/KillActiveProcess.sh"))
 
-hl.bind(mod .. " + Print", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --area"))
-hl.bind(mod .. " + CTRL + Print", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --now"))
-hl.bind(mod .. " + SHIFT + Print", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --active"))
-hl.bind("Print", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --swappy"))
+-- Freeze → select → annotate (satty) → copy/save. See scripts/ScreenShot.sh.
+hl.bind("Print", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh"))
 
 -- ── Navigation ─────────────────────────────────────────────────────────────
 -- key -> direction, for arrows and vim keys (h=left, l=right, k=up, j=down)

@@ -2,19 +2,27 @@
 
 # Variables
 rofi_theme="$HOME/.config/rofi/emoji-picker.rasi"
-msg='** note ** 👀 Click or Return to choose || Ctrl V to Paste'
+msg='** note ** 👀 Click or Return to insert (also copied to clipboard)'
 
 # Check if rofi is already running
 if pidof rofi > /dev/null; then
   pkill rofi
 fi
 
-sed '1,/^# # DATA # #$/d' "$0" | \
-rofi -i -dmenu -mesg "$msg" -config $rofi_theme | \
-awk '{print $1}' | \
-head -n 1 | \
-tr -d '\n' | \
-wl-copy
+emoji=$(
+  sed '1,/^# # DATA # #$/d' "$0" |
+    rofi -i -dmenu -mesg "$msg" -config "$rofi_theme" |
+    awk 'NR==1 {print $1}'
+)
+
+[[ -z "$emoji" ]] && exit
+
+# Copy to clipboard
+printf '%s' "$emoji" | wl-copy
+
+# Type it into the previously focused window (give focus time to return after rofi closes)
+sleep 0.15
+wtype -- "$emoji"
 
 exit
 

@@ -83,6 +83,22 @@ hl.window_rule({
 	focus_on_activate = true,
 })
 
+-- Screenshot annotator (scripts/ScreenShot.sh): float it centered over the screen.
+hl.window_rule({
+	name = "satty-float",
+	match = { class = "^(com.gabm.satty)$" },
+	float = true,
+	center = true,
+})
+
+-- Screenshot freeze + selection overlays: no fade, or grim could catch a
+-- half-faded overlay if animations get turned back on.
+hl.layer_rule({
+	name = "screenshot_no_animation",
+	match = { namespace = "^(hyprpicker|selection)$" },
+	no_anim = true,
+})
+
 hl.layer_rule({
 	name = "rofi_no_animation",
 	match = { namespace = "^(rofi)$" },

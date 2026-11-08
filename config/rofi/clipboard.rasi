@@ -1,14 +1,61 @@
 @theme "./config.rasi"
 
+/* Wider window to make room for the preview sidebar */
 window {
-  width: inherit;
+  width: 75%;
   height: inherit;
+}
+
+mainbox {
+  children: [ "inputbar", "message", "body" ];
+  spacing: 10px;
 }
 
 entry {
   width: inherit;
 }
 
-  listview {
+/* List on the left, preview sidebar on the right */
+body {
+  orientation: horizontal;
+  children: [ "listview", "preview" ];
+  spacing: 10px;
+  background-color: transparent;
+}
+
+listview {
   lines: 20;
+  expand: true;
+}
+
+/* ---- Preview sidebar ---- */
+preview {
+  orientation: vertical;
+  children: [ "icon-current-entry", "textbox-current-entry" ];
+  width: 38%;
+  expand: false;
+  spacing: 10px;
+  padding: 10px;
+  border: 0px 0px 0px 2px;
+  border-color: gray/20%;
+  background-color: transparent;
+}
+
+/* Large preview of the selected image (empty for text entries) */
+icon-current-entry {
+  size: 680px;
+  squared: false;
+  expand: true;
+  horizontal-align: 0.5;
+  vertical-align: 0.5;
+  background-color: transparent;
+}
+
+/* Full text of the selected entry (image metadata for images) */
+textbox-current-entry {
+  expand: false;
+  font: "JetBrainsMono Nerd Font 10";
+  text-color: lightgrey;
+  background-color: transparent;
+  horizontal-align: 0.5;
 }

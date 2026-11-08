@@ -5,6 +5,7 @@ configuration {
     show-icons:                 true;
     drun-display-format:        "{name}";
     hover-select:               true;
+    scroll-method:              1;      /* continuous: list scrolls under the selection */
     me-select-entry:            "MouseSecondary";
     me-accept-entry:            "MousePrimary";
     font:                       "JetBrainsMono Nerd Font 12";
@@ -88,11 +89,11 @@ element normal.active {
 
 element-text selected,
 element selected.normal {
-    background-color:            #FDD66F;
+    background-color:            #DDDDDD;
     text-color:                  black;
 }
 
 element selected.active {
-    background-color:            #FDD66F;
+    background-color:            #DDDDDD;
     text-color:                  black;
 }
